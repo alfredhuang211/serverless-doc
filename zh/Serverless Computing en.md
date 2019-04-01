@@ -6,19 +6,9 @@ Joseph M. Hellerstein，Jose Faleiro，Joseph E. Gonzalez，Johann Schleier-Smit
 
 ## 抽象
 
-Serverless computing offers the potential to program the cloud in
-an autoscaling, pay-as-you go manner. In this paper we address
-critical gaps in first-generation serverless computing, which place
-its autoscaling potential at odds with dominant trends in modern
-computing: notably data-centric and distributed computing, but
-also open source and custom hardware. Put together, these gaps
-make current serverless offerings a bad fit for cloud innovation
-and particularly bad for data systems innovation. In addition to
-pinpointing some of the main shortfalls of current serverless architectures, we raise a set of challenges we believe must be met
-to unlock the radical potential that the cloud—with its exabytes of
-storage and millions of cores—should offer to innovative developers.
+无服务器计算提供了以自动缩放，按需付费的方式对云进行编程的潜力。在本文中，我们指出了第一代无服务器计算中的关键差距，这使得其自动缩放潜力与现代计算的主流趋势不一致：极度的数据中心化和计算分布式，以及开源和定制硬件。总而言之，这些差距使得当前无服务器产品不适合云创新，特别是对数据系统创新不利。除了指出当前无服务器架构的一些主要缺陷之外，我们还提出了一系列挑战，我们认为必须满足这些挑战才能释放云 - 其EB级存储和数百万核 - 应该为创新开发人员提供的激进潜力。
 
-## 1 INTRODUCTION
+## 1 引言
 
 亚马逊网络服务公司最近庆祝成立12周年，标志着十多年的公共云可用性。虽然云开始作为分时机器的地方，但从一开始就很清楚它提出了一个激进的新计算平台：数据容量和分布式计算能力的最大组合，一般公众可以作为服务进行管理。
 
@@ -34,14 +24,9 @@ storage and millions of cores—should offer to innovative developers.
 
 无服务器计算的概念足够模糊，允许乐观主义者对它可能意味着什么进行任何可能的广泛解释。我们的目标不是对术语进行狡辩。具体而言，每个云供应商已经启动了无服务器计算基础架构，并且正在花费大量的营销预算来推广它。在本文中，我们基于供应商实际提供的无服务器计算服务来评估该领域，并根据云的潜力查看为什么他们会感到失望。
 
-### 1.1 “Serverless” goes FaaS
+### 1.1 “无服务器” 成为 FaaS
 
-To begin, we provide a quick introduction to Functions-as-a-Service
-(FaaS), the commonly used and more descriptive name for the core
-of serverless offerings from the public cloud providers. Because
-AWS was the first public cloud—and remains the largest—we focus
-our discussion on the AWS FaaS framework, Lambda; offerings
-from Azure and GCP differ in detail but not in spirit.
+首先，我们快速介绍一下函数即服务（FaaS），这是公共云提供商提供的无服务器产品核心的常用和更具描述性的名称。由于AWS是第一个公共云 - 并且仍然是最大的 - 我们将讨论重点放在AWS FaaS 框架上，Lambda; Azure和GCP提供的产品在细节上有所不同，但精神上并不相同。
 
 FaaS背后的想法很简单，直接来自编程教科书。传统编程基于写入功能，即从输入到输出的映射。程序包含这些功能的组合。因此，编程云的一种简单方法是允许开发人员在云中注册函数，并将这些函数组合成程序。
 
@@ -57,13 +42,13 @@ CIDR’19, January 2019, Asilomar, CA, USA Hellerstein et al.
 
 使用这些服务并接收“按需付费”账单，这些账单可根据存储和计算使用情况进行扩展和缩小。
 
-###1.2 Forward, but also Backward
+### 1.2 前进，但也是后退
 
 我们强调无服务器计算提供的编程模型不仅仅是弹性的，因为人类或脚本可以根据需要添加和删除资源;它是自动缩放。工作负载自动驱动资源的分配和释放。随着现代应用程序在动态性和复杂性方面的增加，动态分配VM，监视服务和响应工作负载变化的任务变得越来越繁重，需要不断的人工观察或为个别应用程序开发的定制脚本。通过提供自动缩放功能，今天的FaaS产品向云计算迈出了一大步，提供了一个实际可管理，看似无限的计算平台2。
 
 不幸的是，正如我们将要看到的，今天的FaaS产品也向后退了两个主要步骤。首先，他们痛苦地忽略了高效数据处理的重要性。其次，它们阻碍了分布式系统的发展。这很奇怪，因为数据驱动的分布式计算是现代计算中大多数创新的核心。在本文的其余部分，我们重点介绍FaaS目前提供一些好处的简单案例。然后，我们详细说明了上面提到的现有FaaS平台的缺点，并提供了简单的用例，FaaS无法提供有效的方法来完成任务。最后，我们概述了向全面实现的云编程基础架构迈进的挑战。
 
-## 2 SERVERLESS IS MORE? THE EASY CASES
+## 2 无服务器但是更多？简单的案例
 
 AWS Lambda已被多家应用程序采用，旨在简化其云部署。亚马逊已经记录了许多这些用例[16]。本节概述了这些文档化应用程序所采用的设计模式。
 
@@ -81,7 +66,7 @@ AWS Lambda已被多家应用程序采用，旨在简化其云部署。亚马逊�
 
 简而言之，当前的FaaS解决方案对于独立任务的简单工作负载具有吸引力 - 无论是嵌入在Lambda函数中的并行任务，还是由专有云服务运行的作业。涉及有状态任务的用例具有令人惊讶的高延迟：10分钟是云供应商宣传的长周转时间，即使对于注册工作流也是如此。这些现实限制了当今FaaS的有吸引力的使用案例，阻止了超出供应商专有服务产品的新第三方程序。
 
-## 3 WHY SERVERLESS TODAY IS TOO LESS
+## 3 为什么如今无服务服务器太缺少了
 
 云提供三个关键功能：无限数据存储，无限的分布式计算能力，以及仅在需要时利用这些功能的能力 - 仅为您消耗的资源付费，而不是购买您在峰值时可能需要的资源。
 
@@ -105,13 +90,7 @@ AWS Lambda已被多家应用程序采用，旨在简化其云部署。亚马逊�
 
 **FaaS是一种数据传输架构** 。这可能是FaaS平台及其API的最大架构缺陷。无服务器功能在隔离的VM上运行，与数据分开。此外，无服务器功能是短暂的且不可寻址的，因此它们在内部缓存状态以服务重复请求的能力是有限的。因此，FaaS通常会“将数据传送到代码”，而不是“将代码传送到数据。”这是系统设计人员反复出现的架构反模式，数据库爱好者似乎需要指出每一代。存储器层次结构的实际情况 - 跨越各种存储层和网络延迟 - 由于延迟，带宽和成本的原因，这使得这是一个糟糕的设计决策。
 
-**FaaS Stymies Distributed Computing**. Because there is no network addressability of serverless functions, two functions can work
-together serverlessly only by passing data through slow and expensive storage. This stymies basic distributed computing. That field
-is founded on protocols performing fine-grained communication
-between agents, including basics like leader election, membership,
-data consistency, and transaction commit. Many distributed and
-parallel applications—especially in scientific computing—also rely
-on fine-grained communication.
+**FaaS 阻碍了分布式计算** 。由于无服务器函数没有网络可寻址性，因此只有通过缓慢而昂贵的存储传递数据，两个函数才能无服务器地协同工作。这阻碍了基本的分布式计算。该领域基于在代理之间执行细粒度通信的协议，包括诸如领导者选举，成员资格，数据一致性和事务提交等基础知识。许多分布式和并行应用程序 - 尤其是科学计算 - 也依赖于细粒度的通信。
 
 有人可能会说，FaaS鼓励一种基于全球状态的新的事件驱动的分布式编程模型。但众所周知，传递消息的进程与共享数据上的事件驱动函数之间存在二元性[17]。对于FaaS，事件处理仍然需要将全局状态的部分从慢速存储传递到无状态功能，从而产生时间和成本。同时，当前的无服务器存储产品在副本之间提供了较弱的一致性。因此，在事件驱动模式中，短暂函数之间的一致性仍然需要作为附加I / O的协议“拴在一起”，类似于经典共识。
 
