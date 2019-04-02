@@ -24,6 +24,7 @@ February 10, 2019
 
 Copyright © 2019, by the author(s).
 All rights reserved.
+
 Permission to make digital or hard copies of all or part of this work for
 personal or classroom use is granted without fee provided that copies are
 not made or distributed for profit or commercial advantage and that copies
@@ -32,12 +33,11 @@ republish, to post on servers or to redistribute to lists, requires prior specif
 permission.
 
 Acknowledgement
+
 The sponsors of the RISELab are Alibaba Group, Amazon Web Services, Ant
 Financial, Arm Holdings, Capital One, Ericsson, Facebook, Google, Huawei,
 Intel, Microsoft, Scotiabank, Splunk, VMware, and the National Science
 Foundation.
-
-
 
 ## Cloud Programming Simplified: A Berkeley View on Serverless Computing
 
@@ -51,6 +51,7 @@ UC Berkeley
 serverlessview@berkeley.edu
 
 ### Abstract
+
 Serverless cloud computing handles virtually all the system administration operations needed to make it
 easier for programmers to use the cloud. It provides an interface that greatly simplifies cloud programming,
 and represents an evolution that parallels the transition from assembly language to high-level programming
@@ -81,8 +82,7 @@ Contents
 5 Fallacies and Pitfalls 20
 6 Summary and Predictions 21
 7 Acknowledgements 23
-8 Appendix. More Depth on Five Applications that Stretch Today’s Serverless
-Computing 29
+8 Appendix. More Depth on Five Applications that Stretch Today’s Serverless Computing 29
 8.1 ExCamera: Video encoding in real-time . . . . . . . . . . . . . . . . . . . . . . . . . 29
 8.2 MapReduce . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
 8.3 Numpywren: Linear algebra . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
@@ -232,7 +232,7 @@ serverless computing relieves programmers from managing server resources.
 
 Put precisely, there are three critical distinctions between serverless and serverful computing:
 
-7Although several serverless computing providers run binary programs in addition to high-level language programs,
+>7Although several serverless computing providers run binary programs in addition to high-level language programs,
 we believe the greatest upside potential for serverless is using high-level languages.
 
 1. Decoupled computation and storage. The storage and computation scale separately and are
@@ -341,7 +341,7 @@ comparing programming interfaces and cost models for several services.
 
 A common question when discussing serverless computing is how it relates to Kubernetes [17],
 
-8Compare for example, AWS Elastic Beanstalk or Google App Engine.
+>8Compare for example, AWS Elastic Beanstalk or Google App Engine.
 
 Service Programming Interface Cost Model
 Cloud Functions Arbitrary code Function execution time
@@ -431,10 +431,12 @@ and overcoming its current limitations.
 Serverless cloud functions have been successfully employed for several classes of workloads10 including API serving, event stream processing, and limited ETL11 (see Table 3). To see what obstacles
 prevent supporting more general workloads, we attempted to create serverless versions of applications that were of interest to us and studied examples published by others. These are not intended
 
-9Although several serverless computing providers run binary programs in addition to high-level language programs,
+>9Although several serverless computing providers run binary programs in addition to high-level language programs,
 we believe the greatest upside potential for serverless is using high-level languages.
-10See \Use Cases" here: https://aws.amazon.com/lambda/.
-11The ETL implemented with today’s cloud functions is typically restricted to Map-only processing.
+
+>10See \Use Cases" here: https://aws.amazon.com/lambda/.
+
+>11The ETL implemented with today’s cloud functions is typically restricted to Map-only processing.
 
 to be representative of the rest of information technology outside of the current serverless computing ecosystem; they are simply examples selected to uncover common weaknesses that might
 prevent serverless versions of many other interesting applications.
@@ -490,6 +492,7 @@ that immediately runs into a number of challenges. First, serverless computing h
 persistent storage, so we need to leverage some remote persistent store, which introduces large la-
 
 Application Description Challenges Workarounds Cost-performance
+
 Real-time
 video
 compression
@@ -660,7 +663,7 @@ via a long-running VM-based rendezvous server. This limitation also suggests tha
 serverless computing may be worth exploring, for example naming function instances and allowing
 direct addressability for access to their internal state (e.g., Actors as a Service [46]).
 
-12Official best practices for scaling Google Cloud Datastore include the \500/50/5" rule: start with 500 operations
+>12Official best practices for scaling Google Cloud Datastore include the \500/50/5" rule: start with 500 operations
 per second, then increase by 50% every 5 minutes. https://cloud.google.com/datastore/docs/best-practices.
 
 Block
@@ -750,11 +753,14 @@ distributed systems. These operations are commonly employed by applications such
 learning training and big data analytics. Figure 2 shows the communication patterns for these
 primitives for both VM-based and function-based solutions.
 
-13A shared file system is integrated on Azure Functions, but not on other cloud functions platforms.
-14File system capacity scales automatically on Azure, AWS, IBM, but not on Google. IOPS do not scale independently
+>13A shared file system is integrated on Azure Functions, but not on other cloud functions platforms.
+
+>14File system capacity scales automatically on Azure, AWS, IBM, but not on Google. IOPS do not scale independently
 of storage space for any provider’s file system.
-15Google Cloud Datastore and DynamoDB provisioned capacity autoscaling can be slow to respond to load spikes.
-16For services that do not charge per operation, such as ElastiCache, we linearly scale down the pricing. For example,
+
+>15Google Cloud Datastore and DynamoDB provisioned capacity autoscaling can be slow to respond to load spikes.
+
+>16For services that do not charge per operation, such as ElastiCache, we linearly scale down the pricing. For example,
 to calculate the cost of 1 IOPS, we take the cost of an instance that can sustain 30K IOPS with 4KB blocks and
 divide by 30K.
 
@@ -831,7 +837,7 @@ parallel SQL engines (e.g., BigQuery, Azure Cosmos DB), as well as orchestration
 (e.g., Apache Airflow [53]) already produce such computation graphs internally. In principle, these
 systems could be modified to run on cloud functions and expose their computation graphs to the
 
-17Consider a cloud function that needs to load a few hundred MB worth of Python libraries from object storage.
+>17Consider a cloud function that needs to load a few hundred MB worth of Python libraries from object storage.
 
 cloud provider. Note that AWS Step Functions represents progress in this direction by providing a
 state machine language and API.
@@ -883,7 +889,7 @@ and the mutable-state semantics of a file system. While it’s likely that datab
 including OLTP, will increasingly be provided as a BaaS offering,18 we see this application as
 representative of several applications that require longer retention and greater durability than
 
-18One recent example is Amazon Aurora Serverless (https://aws.amazon.com/rds/aurora/serverless/). Services
+>18One recent example is Amazon Aurora Serverless (https://aws.amazon.com/rds/aurora/serverless/). Services
 such as Google’s BigQuery and AWS Athena are basically serverless query engines rather than fully fledged
 databases.
 
@@ -1150,6 +1156,7 @@ in 2009 would be addressed and that it would flourish, which it has. The cloud b
 
 We conclude this paper with the following predictions about serverless computing in the next
 decade:
+
 • We expect new BaaS storage services to be created that expand the types of applications that
 run well on serverless computing. Such storage will match the performance of local block
 storage and come in ephemeral and durable variants. We will see much more heterogeneity of
@@ -1170,7 +1177,7 @@ the cloud will decline as serverless computing overcomes its current limitations
 • Serverless computing will become the default computing paradigm of the Cloud Era, largely
 replacing serverful computing and thereby bringing closure to the Client-Server Era.
 
-19Amazon Web Services (AWS) and Microsoft Azure are the largest cloud providers. According to
+>19Amazon Web Services (AWS) and Microsoft Azure are the largest cloud providers. According to
 a recent report in 2018 AWS had 41.5% of \application workloads" in the public cloud, while
 Azure had 29.4% (https://www.skyhighnetworks.com/cloud-security-blog/microsoft-azure-closes-iaasadoption-gap-with-amazon-aws/). In term of revenue, Azure had a $37.6 billion run rate while AWS had a
 $29.5 billion run rate (https://techcrunch.com/2019/02/01/aws-and-microsoft-reap-most-of-the-benefitsof-expanding-cloud-market/).
@@ -1182,170 +1189,246 @@ We’d like to thank people who gave feedback on early drafts of this paper: Mic
 Marvin Theimer (Amazon Web Services), Keith Winstein (Stanford), and Matei Zaharia (Stanford). The sponsors of the RISELab are Alibaba Group, Amazon Web Services, Ant Financial, Arm
 Holdings, Capital One, Ericsson, Facebook, Google, Huawei, Intel, Microsoft, Scotiabank, Splunk,
 VMware, and the National Science Foundation.
+
 References
+
 [1] David A. Patterson. The data center is the computer. Communications of the ACM, 51(1):105{
 105, 2008.
+
 [2] Michael Armbrust, Armando Fox, Rean Griffith, Anthony D. Joseph, Randy H. Katz, Andrew
 Konwinski, Gunho Lee, David A. Patterson, Ariel Rabkin, and Matei Zaharia. Above the
 clouds: A Berkeley view of cloud computing. Technical report, 2009.
+
 [3] Stephen Orban. Cloud-native or lift-and-shift? https://aws.amazon.com/blogs/
 enterprise-strategy/cloud-native-or-lift-and-shift/. Accessed: 2019-01-23.
+
 [4] Christina Delimitrou and Christos Kozyrakis. Quasar: Resource-efficient and QoS-aware cluster management. In Proceedings of the 19th International Conference on Architectural Support
 for Programming Languages and Operating Systems, ASPLOS ’14, pages 127{144, New York,
 NY, USA, 2014. ACM.
+
 [5] Jason Mars, Lingjia Tang, Robert Hundt, Kevin Skadron, and Mary Lou Soffa. Bubbleup: Increasing utilization in modern warehouse scale computers via sensible co-locations. In
 Proceedings of the 44th annual IEEE/ACM International Symposium on Microarchitecture,
 pages 248{259. ACM, 2011.
+
 [6] Hailong Yang, Alex Breslow, Jason Mars, and Lingjia Tang. Bubble-flux: Precise online QoS
 management for increased utilization in warehouse scale computers. In Proceedings of the 40th
 Annual International Symposium on Computer Architecture, ISCA ’13, pages 607{618, New
 York, NY, USA, 2013. ACM.
+
 [7] Serverless computing and applications. https://aws.amazon.com/serverless/. Accessed:
 2019-01-23.
+
 [8] Heroku. https://www.heroku.com. Accessed: 2019-01-23.
+
 [9] Firebase. https://firebase.google.com. Accessed: 2019-01-23.
+
 [10] Parse. https://www.parseplatform.org. Accessed: 2019-01-23.
+
 [11] The Common Gateway Interface (CGI) version 1.1. https://tools.ietf.org/html/rfc3875.
-Accessed: 2019-01-23.
-23
+Accessed: 2019-01-23.23
+
 [12] Liang Wang, Mengyuan Li, Yinqian Zhang, Thomas Ristenpart, and Michael Swift. Peeking
 behind the curtains of serverless platforms. In 2018 USENIX Annual Technical Conference
 (USENIX ATC 18), pages 133{146, 2018.
+
 [13] Timothy A. Wagner. Acquisition and maintenance of compute capacity, September 4 2018.
 US Patent 10067801B1.
+
 [14] Open-sourcing gVisor, a sandboxed container runtime. https://cloud.google.com/blog/
 products/gcp/open-sourcing-gvisor-a-sandboxed-container-runtime. Accessed: 2019-
 01-23.
+
 [15] Firecracker lightweight virtualization for serverless computing. https://aws.amazon.com/
 blogs/aws/firecracker-lightweight-virtualization-for-serverless-computing/.
 Accessed: 2019-01-23.
+
 [16] Zack Bloom. Cloud computing without containers. https://blog.cloudflare.com/cloudcomputing-without-containers/, 2018. Accessed: 2019-01-23.
+
 [17] Eric Brewer. Kubernetes and the path to cloud native. In Proceedings of the Sixth ACM
 Symposium on Cloud Computing, SoCC ’15, pages 167{167, New York, NY, USA, 2015. ACM.
+
 [18] Brendan Burns, Brian Grant, David Oppenheimer, Eric Brewer, and John Wilkes. Borg,
 Omega, and Kubernetes. Queue, 14(1):10, 2016.
+
 [19] AWS Lambda@Edge. https://aws.amazon.com/lambda/edge/. Accessed: 2019-01-23.
+
 [20] Cloudflare Workers. https://www.cloudflare.com/products/cloudflare-workers/. Accessed: 2019-01-23.
+
 [21] AWS Lambda Greengrass. https://aws.amazon.com/greengrass/. Accessed: 2019-01-23.
+
 [22] 2018 serverless community survey: Huge growth in serverless usage. https://serverless.
 com/blog/2018-serverless-community-survey-huge-growth-usage/. Accessed: 2019-01-
 23.
+
 [23] Cloud native technologies are scaling production applications. https://www.cncf.io/blog/
 2017/12/06/cloud-native-technologies-scaling-production-applications/. Accessed: 2019-01-23.
+
 [24] Blake Alcott. Jevons’ paradox. Ecological economics, 54(1):9{21, 2005.
+
 [25] John L. Hennessy and David A. Patterson. A new golden age for computer architecture.
 Communications of the ACM, 62(2):48{60, January 2019.
+
 [26] Sadjad Fouladi, Riad S. Wahby, Brennan Shacklett, Karthikeyan Balasubramaniam, William
 Zeng, Rahul Bhalerao, Anirudh Sivaraman, George Porter, and Keith Winstein. Encoding,
 fast and slow: Low-latency video processing using thousands of tiny threads. In NSDI, pages
 363{376, 2017.
+
 [27] Eric Jonas, Qifan Pu, Shivaram Venkataraman, Ion Stoica, and Benjamin Recht. Occupy the
 cloud: Distributed computing for the 99%. In Proceedings of the 2017 Symposium on Cloud
 Computing, pages 445{451. ACM, 2017.
+
 [28] DynamoDB. https://aws.amazon.com/dynamodb/. Accessed: 2019-01-23.
 24
+
 [29] Cloud Datastore overview. https://cloud.google.com/datastore/docs/concepts/
 overview. Accessed: 2019-01-23.
+
 [30] Steve Abraham. Introducing the Aurora storage engine. https://aws.amazon.com/blogs/
 database/introducing-the-aurora-storage-engine/, 2016. Accessed: 2019-01-23.
+
 [31] Cloud Spanner. https://cloud.google.com/spanner/. Accessed: 2019-01-23.
+
 [32] Cosmos DB. https://docs.microsoft.com/en-us/azure/cosmos-db/introduction. Accessed: 2019-01-23.
+
 [33] Matt Freels. FaunaDB: An architectural overview. http://fauna-assets.s3.amazonaws.
 com/public/FaunaDB-Technical-Whitepaper.pdf. Accessed: 2019-01-23.
+
 [34] Joseph M. Hellerstein, Michael Stonebraker, James Hamilton, et al. Architecture of a database
 system. Foundations and Trends R in Databases, 1(2):141{259, 2007.
+
 [35] James C Corbett, Jeffrey Dean, Michael Epstein, Andrew Fikes, Christopher Frost, Jeffrey John Furman, Sanjay Ghemawat, Andrey Gubarev, Christopher Heiser, Peter Hochschild,
 et al. Spanner: Google’s globally distributed database. ACM Transactions on Computer Systems (TOCS), 31(3):8, 2013.
+
 [36] Cockroach DB. https://www.cockroachlabs.com/docs/stable/architecture/overview.
 html. Accessed: 2019-01-23.
+
 [37] NuoDB. https://www.nuodb.com/. Accessed: 2019-01-23.
+
 [38] Sachin Agarwal. Public cloud object-store performance is very unequal across AWS S3,
 Google Cloud storage, and Azure Blob Storage. https://dev.to/sachinkagarwal/publiccloud-object-store-performance-is-very-unequal-across-aws-s3-google-cloudstorage-and-azure-blob-storage-13do, 2018. Accessed: 2019-01-23.
+
 [39] Amazon S3 announces increased request rate performance. https://aws.amazon.com/
 about-aws/whats-new/2018/07/amazon-s3-announces-increased-request-rateperformance/. Accessed: 2019-01-23.
+
 [40] Amazon S3 pricing. https://aws.amazon.com/s3/pricing/. Accessed: 2019-01-23.
+
 [41] Amazon ElastiCache pricing. https://aws.amazon.com/elasticache/pricing/. Accessed:
 2019-01-23.
+
 [42] Amazon SNS vs PubNub: Differences for pub/sub,. https://www.pubnub.com/blog/2014-
 08-21-amazon-sns-pubnub-differences-pubsub/. Accessed: 2019-01-23.
+
 [43] Simson L. Garfinkel. An evaluation of Amazon’s grid computing services: EC2, S3 and SQS.
 Harvard Computer Science Technical Report TR-08-07, 2007.
+
 [44] Ana Klimovic, Yawen Wang, Patrick Stuedi, Animesh Trivedi, Jonas Pfefferle, and Christos
 Kozyrakis. Pocket: Elastic ephemeral storage for serverless analytics. In 13th USENIX Symposium on Operating Systems Design and Implementation (OSDI 18), pages 427{444, 2018.
+
 [45] Istemi Ekin Akkus, Ruichuan Chen, Ivica Rimac, Manuel Stein, Klaus Satzke, Andre Beck,
 Paarijaat Aditya, and Volker Hilt. Sand: Towards high-performance serverless computing. In
 2018 USENIX Annual Technical Conference (USENIX ATC 18), pages 923{935, 2018.
 25
+
 [46] Johann Schleier-Smith. Serverless foundations for elastic database systems. CIDR, 2019.
+
 [47] Vaishaal Shankar, Karl Krauth, Qifan Pu, Eric Jonas, Shivaram Venkataraman, Ion Stoica,
 Benjamin Recht, and Jonathan Ragan-Kelley. numpywren: Serverless linear algebra. arXiv
 preprint arXiv:1810.09679, 2018.
+
 [48] Scott Hendrickson, Stephen Sturdevant, Tyler Harter, Venkateshwaran Venkataramani, Andrea C. Arpaci-Dusseau, and Remzi H. Arpaci-Dusseau. Serverless computation with OpenLambda. Elastic, 60:80.
+
 [49] Ioana Baldini, Paul Castro, Kerry Chang, Perry Cheng, Stephen Fink, Vatche Ishakian, Nick
 Mitchell, Vinod Muthusamy, Rodric Rabbah, Aleksander Slominski, et al. Serverless computing: Current trends and open problems. In Research Advances in Cloud Computing, pages
 1{20. Springer, 2017.
+
 [50] Joseph M. Hellerstein, Jose Faleiro, Joseph E Gonzalez, Johann Schleier-Smith, Vikram
 Sreekanti, Alexey Tumanov, and Chenggang Wu. Serverless computing: One step forward,
 two steps back. CIDR, 2019.
+
 [51] James Larisch, James Mickens, and Eddie Kohler. Alto: Lightweight VMs using virtualizationaware managed runtimes. In Proceedings of the 15th International Conference on Managed
 Languages & Runtimes, page 8. ACM, 2018.
+
 [52] Tyler Akidau, Robert Bradshaw, Craig Chambers, Slava Chernyak, Rafael J. Fern´andezMoctezuma, Reuven Lax, Sam McVeety, Daniel Mills, Frances Perry, Eric Schmidt, et al.
 The dataflow model: A practical approach to balancing correctness, latency, and cost in
 massive-scale, unbounded, out-of-order data processing. Proceedings of the VLDB Endowment, 8(12):1792{1803, 2015.
+
 [53] Apache Airflow. https://airflow.apache.org. Accessed: 2019-01-23.
+
 [54] John Ousterhout, Arjun Gopalan, Ashish Gupta, Ankita Kejriwal, Collin Lee, Behnam Montazeri, Diego Ongaro, Seo Jin Park, Henry Qin, Mendel Rosenblum, et al. The RAMCloud
 storage system. ACM Transactions on Computer Systems (TOCS), 33(3):7, 2015.
+
 [55] Aleksandar Dragojevi´c, Dushyanth Narayanan, Miguel Castro, and Orion Hodson. FaRM:
 Fast remote memory. In 11th USENIX Symposium on Networked Systems Design and Implementation (NSDI 14), pages 401{414, 2014.
+
 [56] Chenggang Wu, Vikram Sreekanti, and Joseph M. Hellerstein. Autoscaling tiered cloud storage
 in Anna. Proceedings of the VLDB Endowment, 12, 2019.
+
 [57] An Chen. A review of emerging non-volatile memory (NVM) technologies and applications.
 Solid-State Electronics, 125:25{38, 2016.
+
 [58] Binaris serverless functions. https://binaris.com. Accessed: 2019-01-23.
+
 [59] Edward Oakes, Leon Yang, Dennis Zhou, Kevin Houck, Tyler Harter, Andrea Arpaci-Dusseau,
 and Remzi Arpaci-Dusseau. SOCK: Rapid task provisioning with serverless-optimized containers. In 2018 USENIX Annual Technical Conference (USENIX ATC 18), pages 57{70, 2018.
 26
+
 [60] Filipe Manco, Costin Lupu, Florian Schmidt, Jose Mendes, Simon Kuenzer, Sumit Sati,
 Kenichi Yasukata, Costin Raiciu, and Felipe Huici. My VM is lighter (and safer) than your container. In Proceedings of the 26th Symposium on Operating Systems Principles, pages 218{233.
 ACM, 2017.
+
 [61] Knative: Kubernetes-based platform to build, deploy, and manage modern serverless workloads. https://github.com/knative. Accessed: 2019-01-23.
+
 [62] Yoongu Kim, Ross Daly, Jeremie Kim, Chris Fallin, Ji Hye Lee, Donghyuk Lee, Chris Wilkerson, Konrad Lai, and Onur Mutlu. Flipping bits in memory without accessing them: An
 experimental study of dram disturbance errors. In ACM SIGARCH Computer Architecture
 News, volume 42, pages 361{372. IEEE Press, 2014.
+
 [63] Thomas Ristenpart, Eran Tromer, Hovav Shacham, and Stefan Savage. Hey, you, get off of
 my cloud: Exploring information leakage in third-party compute clouds. In Proceedings of the
 16th ACM conference on Computer and communications security, pages 199{212. ACM, 2009.
+
 [64] Kalev Alpernas, Cormac Flanagan, Sadjad Fouladi, Leonid Ryzhyk, Mooly Sagiv, Thomas
 Schmitz, and Keith Winstein. Secure serverless computing using dynamic information flow
 control. arXiv preprint arXiv:1802.08984, 2018.
+
 [65] Laurent Eschenauer and Virgil D. Gligor. A key-management scheme for distributed sensor
 networks. In Proceedings of the 9th ACM Conference on Computer and Communications
 Security, pages 41{47. ACM, 2002.
+
 [66] Paul Kocher, Jann Horn, Anders Fogh, Daniel Genkin, Daniel Gruss, Werner Haas, Mike Hamburg, Moritz Lipp, Stefan Mangard, Thomas Prescher, Michael Schwarz, and Yuval Yarom.
 Spectre attacks: Exploiting speculative execution. In 40th IEEE Symposium on Security and
 Privacy (S&P’19), 2019.
+
 [67] Moritz Lipp, Michael Schwarz, Daniel Gruss, Thomas Prescher, Werner Haas, Anders Fogh,
 Jann Horn, Stefan Mangard, Paul Kocher, Daniel Genkin, Yuval Yarom, and Mike Hamburg.
 Meltdown: Reading kernel memory from user space. In 27th USENIX Security Symposium
 (USENIX Security 18), 2018.
+
 [68] Elaine Shi, T-H Hubert Chan, Emil Stefanov, and Mingfei Li. Oblivious RAM with O((log N)3)
 worst-case cost. In International Conference on The Theory and Application of Cryptology and
 Information Security, pages 197{214. Springer, 2011.
+
 [69] John L. Hennessy and David A. Patterson. Computer architecture: A quantitative approach.
 Elsevier, 2017.
+
 [70] John L. Hennessy and David A. Patterson. A new golden age for computer architecture:
 Domain-specific hardware/software co-design, enhanced security, open instruction sets, and
 agile chip development. Turing Lecture, 2018.
+
 [71] Timothy A. Wagner. Debunking serverless myths. https://www.slideshare.net/
 TimWagner/serverlessconf-2018-keynote-debunking-serverless-myths, 2018.
+
 [72] Serverless Inc. https://serverless.com. Accessed: 2019-01-23.
 27
+
 [73] Mart´ın Abadi, Paul Barham, Jianmin Chen, Zhifeng Chen, Andy Davis, Jeffrey Dean,
 Matthieu Devin, Sanjay Ghemawat, Geoffrey Irving, Michael Isard, et al. Tensorflow: A
 system for large-scale machine learning. In OSDI, 2016.
+
 [74] TPC-DS benchmark. http://www.tpc.org/tpcds/. Accessed: 2019-01-23.
+
 [75] Mu Li, David G Andersen, and Jun Woo Park. Scaling distributed machine learning with the
 parameter server. In 11th USENIX Symposium on Operating Systems Design and Implementation (OSDI 18), 2014.
+
 [76] TPC-C. http://www.tpc.org/tpcc/. Accessed: 2019-01-23.
 28
 
@@ -1398,7 +1481,7 @@ Table 2).20 Hence, we need to partition the input into 33,000 blocks. If we were
 function per block, and an equal number of reduce function (i.e., M = R = 33; 000), we would
 need to perform 1.11 billion transfers, or 2.22 billion IO operations (i.e., one write and one read per
 
-20This assumes the cloud function needs to read all data before creating the output.
+>20This assumes the cloud function needs to read all data before creating the output.
 
 Figure 3: (a) Shuffle operation with M mappers and N receivers. Each transfer happens via external
 storage, which is shown by a large blue rectangle. The data corresponding to each transfer is shown
@@ -1433,7 +1516,7 @@ set and the maximum degree of parallelism for Cholesky decomposition, one of the
 methods for solving linear equation on a large matrix. Provisioning a cluster with a fixed size will
 either slow down the job or leave the cluster underutilized.
 
-21Elasticache is based on Redis. A single single-threaded Redis instance can handle 100K+ IOPS. 100 instances can
+>21Elasticache is based on Redis. A single single-threaded Redis instance can handle 100K+ IOPS. 100 instances can
 handle 1.3B transfers in just 130 seconds.
 
 Figure 4: Theoretical profile of task parallelism and working set size over time in a distributed
